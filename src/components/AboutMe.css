@@ -1,0 +1,118 @@
+.about-section {
+    padding: 80px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.bento-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, minmax(200px, auto));
+    gap: 20px;
+}
+
+.bento-tile {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.bento-tile:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-5px);
+    border-color: var(--color-300);
+}
+
+.tile-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    color: var(--color-200);
+}
+
+.bento-tile h3 {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    color: var(--color-50);
+}
+
+.bento-tile p {
+    font-size: 0.9rem;
+    color: #ccc;
+}
+
+/* Center Tile Special Styling */
+.tile-center {
+    background: linear-gradient(135deg, var(--color-800) 0%, var(--color-600) 100%);
+    border: 1px solid var(--color-400);
+    box-shadow: 0 0 30px rgba(39, 11, 244, 0.3);
+    z-index: 2;
+    transform: scale(1.05);
+}
+
+.tile-center:hover {
+    transform: scale(1.08);
+    /* Slightly larger hover effect */
+    box-shadow: 0 0 40px rgba(39, 11, 244, 0.5);
+}
+
+.profile-icon {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.tile-center h3 {
+    font-size: 1.5rem;
+    color: #fff;
+    margin-bottom: 15px;
+}
+
+.tile-center p {
+    font-size: 1rem;
+    color: #eee;
+    line-height: 1.6;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+    .bento-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+        /* Allow auto rows */
+    }
+
+    /* Reorder for mobile if needed, or keep 2 col flow. 
+       If 2 cols, center tile (5th child) will be on 3rd row left. 
+       We might want to make it span 2 cols on mobile to pop.
+    */
+    .tile-center {
+        grid-column: span 2;
+        order: -1;
+        /* Move to top on mobile/tablet? Or keep in flow? */
+        /* Let's keep it in flow but span full width */
+    }
+}
+
+@media (max-width: 600px) {
+    .bento-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tile-center {
+        grid-column: span 1;
+        transform: none;
+        /* Reset distinct scale on mobile to fit nicely */
+    }
+
+    .tile-center:hover {
+        transform: translateY(-5px);
+    }
+}

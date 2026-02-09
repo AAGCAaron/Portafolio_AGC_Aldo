@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+
+:root {
+  --color-50: #E9E7FE;
+  --color-100: #C2BBFC;
+  --color-200: #9B8FFA;
+  --color-300: #7463F8;
+  --color-400: #4E37F6;
+  --color-500: #270BF4;
+  --color-600: #2009C8;
+  --color-700: #19079C;
+  --color-800: #120570;
+  --color-900: #0A033D;
+  --color-950: #040118;
+
+  --bg-primary: var(--color-900);
+  --text-primary: #FFFFFF;
+  --bg-button: rgba(194, 187, 252, 0.3); /* #C2BBFC is rgb(194, 187, 252) */
+  --bg-button-hover: rgba(194, 187, 252, 0.5);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Montserrat', sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-weight: 700;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background-color: var(--bg-button);
+  color: #FFFFFF;
+  font-weight: 700; /* Bold white */
+  font-family: 'Montserrat', sans-serif;
+  transition: all 0.3s ease;
+  border-radius: 8px; /* Added some rounded corners for modern feel */
+  padding: 12px 24px;
+}
+
+button:hover {
+  background-color: var(--bg-button-hover);
+  transform: translateY(-2px); /* Micro-animation */
+}
+
+/* Scrollbar styling for a polished look */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-950);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-700);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-500);
+}
+
+/* Utility classes */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 24px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  border-color: var(--color-500);
+}

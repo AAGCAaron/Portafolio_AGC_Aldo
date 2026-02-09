@@ -1,0 +1,206 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    padding: 20px 0;
+    background: transparent;
+    /* Transparent by default like the image seems to imply for the container */
+}
+
+.navbar-scrolled {
+    padding: 10px 0;
+    backdrop-filter: blur(10px);
+    background: rgba(4, 1, 24, 0.2);
+    /* Slight background on scroll */
+}
+
+.navbar-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Brand - Left Pill */
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    background-color: var(--color-900);
+    border: 1px solid var(--color-700);
+    padding: 5px 20px 5px 5px;
+    border-radius: 50px;
+    /* Pill shape */
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+}
+
+.navbar-brand:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-500);
+}
+
+.brand-logo {
+    width: 35px;
+    height: 35px;
+    background-color: var(--color-100);
+    color: var(--color-900);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.9rem;
+    margin-right: 10px;
+}
+
+.brand-name {
+    color: white;
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+/* Menu - Center Pills */
+.navbar-menu {
+    display: flex;
+    gap: 15px;
+}
+
+.nav-pill {
+    background-color: var(--color-900);
+    border: 1px solid var(--color-700);
+    color: var(--color-50);
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-family: 'Montserrat', sans-serif;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.nav-pill:hover {
+    background-color: var(--color-700);
+    color: #fff;
+    transform: translateY(-2px);
+    border-color: var(--color-400);
+    box-shadow: 0 6px 12px rgba(116, 99, 248, 0.2);
+}
+
+/* Actions - Right Circles/Pills */
+.navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.action-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--color-900);
+    border: 1px solid var(--color-700);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.action-circle:hover {
+    background-color: var(--color-500);
+    transform: translateY(-2px);
+}
+
+.cv-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--color-300);
+    /* Distinct color for CV */
+    color: white;
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(116, 99, 248, 0.3);
+}
+
+.cv-pill:hover {
+    background-color: var(--color-100);
+    color: var(--color-900);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(116, 99, 248, 0.5);
+}
+
+/* Mobile Toggle */
+.mobile-toggle {
+    display: none;
+    font-size: 1.5rem;
+    color: white;
+    cursor: pointer;
+}
+
+.mobile-menu {
+    display: none;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .navbar-menu {
+        display: none;
+    }
+
+    .navbar-actions {
+        display: none;
+    }
+
+    .mobile-toggle {
+        display: block;
+        background: var(--color-800);
+        padding: 10px;
+        border-radius: 50%;
+    }
+
+    .mobile-menu {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 80px;
+        right: 20px;
+        background: var(--color-900);
+        border: 1px solid var(--color-700);
+        padding: 20px;
+        border-radius: 16px;
+        gap: 15px;
+        width: 200px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .mobile-menu button {
+        background: transparent;
+        text-align: left;
+        padding: 10px;
+        border-radius: 8px;
+    }
+
+    .mobile-menu button:hover {
+        background: var(--color-800);
+    }
+
+    .mobile-cv {
+        background: var(--color-500) !important;
+        text-align: center !important;
+        margin-top: 10px;
+    }
+}
