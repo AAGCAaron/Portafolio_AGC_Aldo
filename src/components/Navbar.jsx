@@ -1,70 +1,134 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './Navbar.css';
 import { FaDownload, FaLinkedin, FaGithub, FaBars, FaTimes } from 'react-icons/fa';
 
-const Navbar = () => {
-    const [isScrolled, setIsScrolled] = useState(false);
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
+const NAV_LINKS = [
+    { id: 'inicio',     label: 'Inicio'      },
+    { id: 'skills',     label: 'Skills'      },
+    { id: 'proyectos',  label: 'Proyectos'   },
+    { id: 'github',     label: 'GitHub'      },
+    { id: 'experiencia',label: 'Trayectoria' },
+];
 
+const Navbar = () => {
+    const [scrolled, setScrolled]       = useState(false);
+    const [menuOpen, setMenuOpen]       = useState(false);
+    const [activeId, setActiveId]       = useState('inicio');
+    const [indicatorStyle, setIndicatorStyle] = useState({});
+    const navRef   = useRef(null);
+    const pillsRef = useRef({});
+
+    /* ── Scroll: opacity + active section detection ── */
     useEffect(() => {
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY > 50);
+        const onScroll = () => {
+            setScrolled(window.scrollY > 40);
+
+            // Find which section is currently in view
+            let current = 'inicio';
+            NAV_LINKS.forEach(({ id }) => {
+                const el = document.getElementById(id);
+                if (el && window.scrollY >= el.offsetTop - 120) {
+                    current = id;
+                }
+            });
+            setActiveId(current);
         };
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        return () => window.removeEventListener('scroll', onScroll);
     }, []);
 
-    const scrollToSection = (id) => {
-        const element = document.getElementById(id);
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
-            setIsMenuOpen(false);
-        }
+    /* ── Move indicator under active link ── */
+    useEffect(() => {
+        const activeEl = pillsRef.current[activeId];
+        const navEl    = navRef.current;
+        if (!activeEl || !navEl) return;
+
+        const navRect  = navEl.getBoundingClientRect();
+        const elRect   = activeEl.getBoundingClientRect();
+
+        setIndicatorStyle({
+            left:  elRect.left - navRect.left,
+            width: elRect.width,
+        });
+    }, [activeId]);
+
+    const scrollTo = (id) => {
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+        setMenuOpen(false);
     };
 
     return (
-        <nav className={`navbar ${isScrolled ? 'navbar-scrolled' : ''}`}>
-            <div className="navbar-container">
-                {/* Brand / Logo */}
-                <div className="navbar-brand" onClick={() => scrollToSection('inicio')}>
-                    <div className="brand-logo">AG</div>
-                    <span className="brand-name">Aldo Gutierrez</span>
-                </div>
+        <>
+            <nav className={`floating-navbar ${scrolled ? 'nav-solid' : ''}`}>
+                <div className="fn-inner">
 
-                {/* Desktop Menu */}
-                <div className="navbar-menu">
-                    <button onClick={() => scrollToSection('inicio')} className="nav-pill">Inicio</button>
-                    <button onClick={() => scrollToSection('proyectos')} className="nav-pill">Proyectos</button>
-                    <button onClick={() => scrollToSection('experiencia')} className="nav-pill">Trayectoria</button>
-                    <button onClick={() => scrollToSection('sobre-mi')} className="nav-pill">Sobre mí</button>
-                </div>
+                    {/* Logo */}
+                    <button className="fn-logo" onClick={() => scrollTo('inicio')}>
+                        <span className="logo-text">Aldo Gutierrez</span>
+                    </button>
 
-                {/* Socials & CV */}
-                <div className="navbar-actions">
-                    <a href="#" className="action-circle" title="LinkedIn"><FaLinkedin /></a>
-                    <a href="#" className="action-circle" title="GitHub"><FaGithub /></a>
-                    <button className="cv-pill">
-                        <span>CV</span> <FaDownload size={12} />
+                    {/* Desktop links + sliding indicator */}
+                    <div className="fn-links" ref={navRef}>
+                        {/* Sliding active indicator */}
+                        <span className="nav-indicator" style={indicatorStyle} />
+
+                        {NAV_LINKS.map(({ id, label }) => (
+                            <button
+                                key={id}
+                                ref={el => pillsRef.current[id] = el}
+                                className={`fn-link ${activeId === id ? 'fn-link-active' : ''}`}
+                                onClick={() => scrollTo(id)}
+                            >
+                                {label}
+                            </button>
+                        ))}
+                    </div>
+
+                    {/* Actions */}
+                    <div className="fn-actions">
+                        <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="fn-icon-btn" title="LinkedIn">
+                            <FaLinkedin />
+                        </a>
+                        <a href="https://github.com/AAGCAaron" target="_blank" rel="noreferrer" className="fn-icon-btn" title="GitHub">
+                            <FaGithub />
+                        </a>
+                        <button className="fn-cv-btn">
+                            CV <FaDownload size={11} />
+                        </button>
+                    </div>
+
+                    {/* Mobile hamburger */}
+                    <button className="fn-hamburger" onClick={() => setMenuOpen(!menuOpen)} aria-label="Menú">
+                        {menuOpen ? <FaTimes /> : <FaBars />}
                     </button>
                 </div>
+            </nav>
 
-                {/* Mobile Toggle */}
-                <div className="mobile-toggle" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-                    {isMenuOpen ? <FaTimes /> : <FaBars />}
+            {/* Mobile drawer */}
+            <div className={`fn-drawer ${menuOpen ? 'fn-drawer-open' : ''}`}>
+                <div className="fn-drawer-inner">
+                    {NAV_LINKS.map(({ id, label }) => (
+                        <button
+                            key={id}
+                            className={`fn-drawer-link ${activeId === id ? 'fn-drawer-active' : ''}`}
+                            onClick={() => scrollTo(id)}
+                        >
+                            {label}
+                        </button>
+                    ))}
+                    <div className="fn-drawer-divider" />
+                    <div className="fn-drawer-socials">
+                        <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="fn-icon-btn"><FaLinkedin /></a>
+                        <a href="https://github.com/AAGCAaron" target="_blank" rel="noreferrer" className="fn-icon-btn"><FaGithub /></a>
+                    </div>
+                    <button className="fn-cv-btn w-100">Descargar CV <FaDownload size={11} /></button>
                 </div>
             </div>
 
-            {/* Mobile Menu Dropdown */}
-            {isMenuOpen && (
-                <div className="mobile-menu">
-                    <button onClick={() => scrollToSection('inicio')}>Inicio</button>
-                    <button onClick={() => scrollToSection('proyectos')}>Proyectos</button>
-                    <button onClick={() => scrollToSection('experiencia')}>Trayectoria</button>
-                    <button onClick={() => scrollToSection('sobre-mi')}>Sobre mí</button>
-                    <button className="mobile-cv">Descargar CV</button>
-                </div>
-            )}
-        </nav>
+            {/* Backdrop for mobile */}
+            {menuOpen && <div className="fn-backdrop" onClick={() => setMenuOpen(false)} />}
+        </>
     );
 };
 

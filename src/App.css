@@ -11,3 +11,30 @@
   min-height: 100vh;
   position: relative;
 }
+
+.site-footer {
+  text-align: center;
+  padding: 60px 24px 40px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.4);
+  font-size: 0.9rem;
+}
+
+.site-footer strong {
+  color: rgba(255,255,255,0.8);
+}
+
+.footer-code {
+  background: rgba(59, 130, 246, 0.15);
+  color: var(--accent-light);
+  padding: 2px 10px;
+  border-radius: 6px;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.85rem;
+}
+
+.footer-sub {
+  font-size: 0.8rem;
+  margin-top: 8px;
+  color: rgba(255,255,255,0.25);
+}

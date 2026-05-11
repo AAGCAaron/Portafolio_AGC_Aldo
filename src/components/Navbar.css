@@ -1,206 +1,325 @@
-.navbar {
+/* ============================================
+   FLOATING NAVBAR
+   ============================================ */
+
+.floating-navbar {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 1000;
-    transition: all 0.3s ease;
-    padding: 20px 0;
-    background: transparent;
-    /* Transparent by default like the image seems to imply for the container */
+    width: calc(100% - 48px);
+    max-width: 900px;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.navbar-scrolled {
-    padding: 10px 0;
-    backdrop-filter: blur(10px);
-    background: rgba(4, 1, 24, 0.2);
-    /* Slight background on scroll */
+/* When scrolled: denser glass */
+.nav-solid .fn-inner {
+    background: rgba(6, 10, 28, 0.88);
+    border-color: rgba(255,255,255,0.12);
+    box-shadow:
+        0 8px 32px rgba(0,0,0,0.4),
+        0 0 0 1px rgba(255,255,255,0.05),
+        inset 0 1px 0 rgba(255,255,255,0.08);
 }
 
-.navbar-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
+/* Inner pill container */
+.fn-inner {
+    background: rgba(6, 10, 28, 0.55);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 100px;
+    padding: 8px 8px 8px 16px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    gap: 8px;
+    transition: all 0.4s ease;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
 }
 
-/* Brand - Left Pill */
-.navbar-brand {
+/* ── Logo ── */
+.fn-logo {
     display: flex;
     align-items: center;
-    background-color: var(--color-900);
-    border: 1px solid var(--color-700);
-    padding: 5px 20px 5px 5px;
-    border-radius: 50px;
-    /* Pill shape */
+    gap: 10px;
+    background: none;
+    border: none;
     cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease;
+    padding: 0;
+    flex-shrink: 0;
+    margin-right: 8px;
 }
 
-.navbar-brand:hover {
-    transform: translateY(-2px);
-    border-color: var(--color-500);
-}
-
-.brand-logo {
-    width: 35px;
-    height: 35px;
-    background-color: var(--color-100);
-    color: var(--color-900);
+.logo-badge {
+    width: 34px;
+    height: 34px;
+    background: var(--accent-blue);
+    color: #fff;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 800;
-    font-size: 0.9rem;
-    margin-right: 10px;
+    font-size: 0.78rem;
+    letter-spacing: 0.02em;
+    box-shadow: 0 0 14px rgba(59, 130, 246, 0.5);
+    animation: logoPulse 3s ease-in-out infinite;
+    flex-shrink: 0;
 }
 
-.brand-name {
-    color: white;
-    font-weight: 700;
+@keyframes logoPulse {
+    0%, 100% { box-shadow: 0 0 10px rgba(59, 130, 246, 0.4); }
+    50%       { box-shadow: 0 0 22px rgba(59, 130, 246, 0.75); }
+}
+
+.logo-text {
     font-size: 0.95rem;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-}
-
-/* Menu - Center Pills */
-.navbar-menu {
-    display: flex;
-    gap: 15px;
-}
-
-.nav-pill {
-    background-color: var(--color-900);
-    border: 1px solid var(--color-700);
-    color: var(--color-50);
-    padding: 8px 20px;
-    border-radius: 50px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    font-family: 'Montserrat', sans-serif;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.nav-pill:hover {
-    background-color: var(--color-700);
+    font-weight: 700;
     color: #fff;
-    transform: translateY(-2px);
-    border-color: var(--color-400);
-    box-shadow: 0 6px 12px rgba(116, 99, 248, 0.2);
+    letter-spacing: -0.01em;
+    white-space: nowrap;
 }
 
-/* Actions - Right Circles/Pills */
-.navbar-actions {
+/* ── Desktop Links ── */
+.fn-links {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 2px;
+    flex: 1;
+    justify-content: center;
+    position: relative;
 }
 
-.action-circle {
-    width: 40px;
-    height: 40px;
+/* Sliding indicator */
+.nav-indicator {
+    position: absolute;
+    height: 32px;
+    background: rgba(59, 130, 246, 0.15);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    border-radius: 100px;
+    transition: left 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.fn-link {
+    position: relative;
+    background: transparent;
+    border: none;
+    color: rgba(255,255,255,0.5);
+    padding: 7px 16px;
+    border-radius: 100px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    font-family: 'Outfit', sans-serif;
+    cursor: pointer;
+    transition: color 0.25s ease, transform 0.2s ease;
+    white-space: nowrap;
+    z-index: 1;
+}
+
+.fn-link:hover {
+    color: rgba(255,255,255,0.85);
+    transform: translateY(-1px);
+}
+
+.fn-link-active {
+    color: #fff !important;
+    font-weight: 600;
+}
+
+/* ── Actions ── */
+.fn-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+    margin-left: 8px;
+}
+
+.fn-icon-btn {
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
-    background-color: var(--color-900);
-    border: 1px solid var(--color-700);
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.55);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.action-circle:hover {
-    background-color: var(--color-500);
-    transform: translateY(-2px);
-}
-
-.cv-pill {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background-color: var(--color-300);
-    /* Distinct color for CV */
-    color: white;
-    padding: 8px 20px;
-    border-radius: 50px;
-    font-size: 0.9rem;
-    font-weight: 700;
-    font-family: 'Montserrat', sans-serif;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 10px rgba(116, 99, 248, 0.3);
-}
-
-.cv-pill:hover {
-    background-color: var(--color-100);
-    color: var(--color-900);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(116, 99, 248, 0.5);
-}
-
-/* Mobile Toggle */
-.mobile-toggle {
-    display: none;
-    font-size: 1.5rem;
-    color: white;
+    font-size: 0.95rem;
+    text-decoration: none;
     cursor: pointer;
+    transition: all 0.25s ease;
 }
 
-.mobile-menu {
+.fn-icon-btn:hover {
+    color: #fff;
+    background: rgba(59, 130, 246, 0.2);
+    border-color: rgba(59, 130, 246, 0.5);
+    transform: translateY(-2px);
+}
+
+.fn-cv-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: var(--accent-blue);
+    color: #fff;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 100px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    font-family: 'Outfit', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 14px rgba(59, 130, 246, 0.35);
+    white-space: nowrap;
+}
+
+.fn-cv-btn:hover {
+    background: #2563eb;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.55);
+}
+
+.fn-cv-btn.w-100 {
+    width: 100%;
+    justify-content: center;
+}
+
+/* ── Hamburger ── */
+.fn-hamburger {
     display: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #fff;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-left: 4px;
+    transition: all 0.25s ease;
+    flex-shrink: 0;
 }
 
-/* Responsive */
-@media (max-width: 900px) {
-    .navbar-menu {
+.fn-hamburger:hover {
+    background: rgba(59, 130, 246, 0.2);
+    border-color: rgba(59, 130, 246, 0.4);
+}
+
+/* ── Mobile Drawer ── */
+.fn-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(2, 6, 23, 0.6);
+    backdrop-filter: blur(6px);
+    z-index: 990;
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.fn-drawer {
+    position: fixed;
+    top: 80px;
+    left: 24px;
+    right: 24px;
+    z-index: 995;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(-16px) scale(0.97);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fn-drawer-open {
+    pointer-events: all;
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.fn-drawer-inner {
+    background: rgba(6, 10, 28, 0.95);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 24px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    box-shadow: 0 24px 48px rgba(0,0,0,0.5);
+}
+
+.fn-drawer-link {
+    background: transparent;
+    border: none;
+    color: rgba(255,255,255,0.6);
+    padding: 13px 20px;
+    border-radius: 14px;
+    font-size: 1rem;
+    font-weight: 500;
+    font-family: 'Outfit', sans-serif;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.fn-drawer-link:hover {
+    background: rgba(255,255,255,0.05);
+    color: #fff;
+}
+
+.fn-drawer-active {
+    background: rgba(59, 130, 246, 0.12) !important;
+    color: #fff !important;
+    font-weight: 600;
+}
+
+.fn-drawer-divider {
+    height: 1px;
+    background: rgba(255,255,255,0.07);
+    margin: 8px 0;
+}
+
+.fn-drawer-socials {
+    display: flex;
+    gap: 8px;
+    padding: 4px 4px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 860px) {
+    .fn-links,
+    .fn-actions {
         display: none;
     }
 
-    .navbar-actions {
-        display: none;
-    }
-
-    .mobile-toggle {
-        display: block;
-        background: var(--color-800);
-        padding: 10px;
-        border-radius: 50%;
-    }
-
-    .mobile-menu {
+    .fn-hamburger {
         display: flex;
-        flex-direction: column;
-        position: absolute;
-        top: 80px;
-        right: 20px;
-        background: var(--color-900);
-        border: 1px solid var(--color-700);
-        padding: 20px;
-        border-radius: 16px;
-        gap: 15px;
-        width: 200px;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
     }
 
-    .mobile-menu button {
-        background: transparent;
-        text-align: left;
-        padding: 10px;
-        border-radius: 8px;
+    .fn-inner {
+        padding: 8px 8px 8px 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .floating-navbar {
+        top: 12px;
+        width: calc(100% - 24px);
     }
 
-    .mobile-menu button:hover {
-        background: var(--color-800);
-    }
-
-    .mobile-cv {
-        background: var(--color-500) !important;
-        text-align: center !important;
-        margin-top: 10px;
+    .logo-text {
+        display: none;
     }
 }

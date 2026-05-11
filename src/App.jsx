@@ -1,21 +1,27 @@
 import React from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import TechStack from './components/TechStack';
 import Projects from './components/Projects';
+import GitHubStats from './components/GitHubStats';
 import Experience from './components/Experience';
-import AboutMe from './components/AboutMe';
-import './App.css'; // Will be cleared but kept for any future app-wide styles
+import './App.css';
 
 function App() {
   return (
     <div className="app-container">
       <Navbar />
       <div id="inicio"><Hero /></div>
+      <div id="skills"><TechStack /></div>
       <div id="proyectos"><Projects /></div>
+      <div id="github"><GitHubStats /></div>
       <div id="experiencia"><Experience /></div>
-      <div id="sobre-mi"><AboutMe /></div>
-      <footer style={{ textAlign: 'center', padding: '20px', color: '#666', fontSize: '0.8rem' }}>
-        &copy; {new Date().getFullYear()} Developer Portfolio. All rights reserved.
+      <footer className="site-footer">
+        <p>
+          Diseñado & construido por <strong>Aldo Gutierrez</strong> —{' '}
+          <code className="footer-code">v2.0.0</code>
+        </p>
+        <p className="footer-sub">© {new Date().getFullYear()} · Abre la consola del navegador 👀</p>
       </footer>
     </div>
   );

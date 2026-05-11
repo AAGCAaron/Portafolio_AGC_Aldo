@@ -1,0 +1,145 @@
+.techstack-section {
+    padding: 100px 0;
+    overflow: hidden;
+}
+
+.techstack-eyebrow {
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--accent-blue);
+    margin-bottom: 12px;
+}
+
+.techstack-sub {
+    color: rgba(255,255,255,0.6);
+    font-size: 1.1rem;
+    max-width: 500px;
+    margin: 16px auto 0;
+}
+
+/* ====== Infinite Marquee ====== */
+.marquee-wrapper {
+    position: relative;
+    overflow: hidden;
+    padding: 24px 0;
+    mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+    margin: 20px 0;
+}
+
+.marquee-track {
+    display: flex;
+    gap: 20px;
+    width: max-content;
+    animation: marquee-scroll 30s linear infinite;
+}
+
+.marquee-track:hover {
+    animation-play-state: paused;
+}
+
+@keyframes marquee-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+}
+
+.tech-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 100px;
+    padding: 10px 22px;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+}
+
+.tech-chip:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.2);
+}
+
+.tech-chip-icon {
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+}
+
+.tech-chip-name {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #e2e8f0;
+}
+
+/* ====== Tech Grid ====== */
+.tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 20px;
+}
+
+.tech-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    background: rgba(15, 23, 42, 0.5);
+    border: 1px solid var(--border-light);
+    border-radius: 20px;
+    padding: 28px 16px;
+    cursor: default;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(12px);
+    overflow: hidden;
+}
+
+.tech-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    background: radial-gradient(circle at center, var(--glow-color, #3b82f6), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.tech-card:hover {
+    transform: translateY(-6px) scale(1.03);
+    border-color: var(--glow-color, #3b82f6);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3), 0 0 20px color-mix(in srgb, var(--glow-color, #3b82f6) 30%, transparent);
+}
+
+.tech-card:hover::before {
+    opacity: 0.08;
+}
+
+.tech-card-icon {
+    font-size: 2.5rem;
+    transition: transform 0.3s ease;
+}
+
+.tech-card:hover .tech-card-icon {
+    transform: scale(1.15);
+}
+
+.tech-card-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.8);
+    text-align: center;
+    letter-spacing: 0.01em;
+}
+
+@media (max-width: 576px) {
+    .tech-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+    }
+    .tech-card { padding: 20px 10px; }
+    .tech-card-icon { font-size: 2rem; }
+}
